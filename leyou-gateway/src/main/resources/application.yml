@@ -1,0 +1,37 @@
+server:
+  port: 10010
+
+spring:
+  application:
+    name: api-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10088/eureka # default写错 ！！！
+
+zuul:
+  prefix: /api
+  routes:
+    item-service: /item/**  #/item/**
+
+    leyou-upload:
+      path: /upload/**
+      serviceId: leyou-upload
+      strip-prefix: false
+
+hystrix:
+  command:
+    default:
+      exection:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000 # 熔断超时时长
+
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 3500
+  MaxAutoRetries: 0 #当前服务重试次数
+  MaxAutoRetriesNextServer: 0 #切换服务重试次数
+
+
